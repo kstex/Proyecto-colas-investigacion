@@ -237,7 +237,7 @@ public class Simulation {
                 arrivalTime = arrivalTime + numberTELL;
 
                 if (!queueSim.isEmpty() || flagBusy) {
-                    this.queueSim.add(new Client(clientNumber,arrivalTime));
+                    this.queueSim.add(new Client(clientNumber,timeModeling));
 
                     randomNumberTS = 0;
                     numberTS = 0;
@@ -296,13 +296,13 @@ public class Simulation {
                 timeModeling = departureTime[posDT];
                 clientSystemW=(serverStatus[posDT][2]-serverStatus[posDT][1])+clientSystemW;
                 
-                if (!queueSim.isEmpty()) {
-                    serverStatus[posDT][0] = queueSim.remove().getClientNumber();
+                if (!queueSim.isEmpty()) {  
                     
-
+                    clientSystemWq=(timeModeling-queueSim.peek().getArriveTime())+clientSystemWq;       
+                    serverStatus[posDT][0] = queueSim.peek().getClientNumber();    
+                    queueSim.remove().getClientNumber(); 
                     this.randomNumberTS = (int) (Math.random() * 99) + 1;
                     this.numberTS = this.assignmentTS(dataEntry, randomNumberTS);
-
                     departureTime[posDT] = timeModeling + (long) numberTS;
 
                 } else {
@@ -356,10 +356,12 @@ public class Simulation {
         clientSystemL = clientSystemL / timeModeling;
         clientSystemLq = clientSystemLq / timeModeling;        
         clientSystemW = clientSystemW / clientNumber;
+        clientSystemWq = clientSystemWq / clientNumber;
         
         System.out.println("Cantidad promedio de clientes en el sistema: " + clientSystemL);
         System.out.println("Cantidad promedio de clientes en cola : "+ clientSystemLq);
-        System.out.println("Tiempo promedio de un cliente en el sistema: " + clientSystemW);
+        System.out.println("Tiempo promedio de un cliente en el sistema: " + clientSystemW);        
+        System.out.println("Tiempo promedio de un cliente en cola: " + clientSystemWq);
         System.out.println("Tiempo promedio adicional que se trabaja después de cerrar: ");
         System.out.println("Porcentaje de utilización de cada servidor y general: ");
         System.out.println("Costos: servidores y cliente: ");
