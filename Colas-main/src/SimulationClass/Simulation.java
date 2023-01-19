@@ -90,7 +90,8 @@ public class Simulation {
     private int serviceTime;   //tiempo de servicio segun servidor
 
 
-    private double clientSystemTime;
+    private double clientSystemL;    
+    private double clientSystemLq;
 
     private int extra;
 
@@ -124,7 +125,8 @@ public class Simulation {
 
         this.totalClient = 0;
 
-        this.clientSystemTime = 0;
+        this.clientSystemL = 0;
+        this.clientSystemLq = 0;
 
         long clientOutNumber = 0;
 
@@ -145,6 +147,7 @@ public class Simulation {
         }
 
         long dt = 9999;
+        long aux=0;
         int posDT = 0;
         long oldTimeModeling = 0;
         boolean flagBusy;
@@ -210,13 +213,17 @@ public class Simulation {
                     break;
                 }
             }
-
+            
+            long clientsL=totalClient;
+            long clientsLq=queueSim.size();
+            
             //Llegada
             if (arrivalTime < dt) {
 
                 clientNumber++;
                 totalClient++;
-
+                
+                aux=timeModeling;
                 //oldTimeModeling = timeModeling;
                 timeModeling = arrivalTime;
                 
@@ -265,6 +272,8 @@ public class Simulation {
                                 clientList.size(), arrivalTime, departureTime, randomNumberTELL, numberTELL, randomNumberTS, numberTS
                         )
                 );*/
+ 
+ 
                 System.out.print("|| " + eventNumber + "         || Llegada || " + clientNumber + "           || " + timeModeling + "  ||");
                 for (int i = 0; i < serverStatus.length; i++) {
                     System.out.print(" " + serverStatus[i][0] + "  ||");
@@ -281,6 +290,7 @@ public class Simulation {
 
                 totalClient--;
                 flagOut = true;
+                aux=timeModeling;
                 timeModeling = departureTime[posDT];
 
                 if (!queueSim.isEmpty()) {
@@ -318,6 +328,12 @@ public class Simulation {
                 System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
             }
 
+        //Cantidad promedio de clientes en el sistema
+        clientSystemL= ((timeModeling-aux)*clientsL) + (clientSystemL);
+               
+        //Cantidad promedio de clientes en cola
+        clientSystemLq = ((timeModeling-aux)*clientsLq) + (clientSystemLq);
+                
         } while (timeModeling <= dataEntry.getTimeSimulation());
 
         /*
@@ -333,13 +349,15 @@ public class Simulation {
          */
         //dataOut.setEventTable(eventModelTable);
 
-        /*
-        System.out.println("Cantidad promedio de clientes en el sistema: " + clientSystemTime);
-        System.out.println("Cantidad promedio de clientes en cola : ");
+        clientSystemL = clientSystemL / timeModeling;
+        clientSystemLq = clientSystemLq / timeModeling;
+        
+        System.out.println("Cantidad promedio de clientes en el sistema: " + clientSystemL);
+        System.out.println("Cantidad promedio de clientes en cola : "+clientSystemLq);
         System.out.println("Tiempo promedio de un cliente en cola y en el sistema: ");
         System.out.println("Tiempo promedio adicional que se trabaja después de cerrar: ");
         System.out.println("Porcentaje de utilización de cada servidor y general: ");
-        System.out.println("Costos: servidores y cliente: ");*/
+        System.out.println("Costos: servidores y cliente: ");
         return dataOut;
     }
 
