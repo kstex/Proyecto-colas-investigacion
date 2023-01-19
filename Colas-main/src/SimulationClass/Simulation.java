@@ -92,6 +92,8 @@ public class Simulation {
 
     private double clientSystemL;    
     private double clientSystemLq;
+    private double clientSystemW;    
+    private double clientSystemWq;    
 
     private int extra;
 
@@ -126,7 +128,9 @@ public class Simulation {
         this.totalClient = 0;
 
         this.clientSystemL = 0;
-        this.clientSystemLq = 0;
+        this.clientSystemLq = 0;        
+        this.clientSystemW = 0;
+        this.clientSystemWq = 0;
 
         long clientOutNumber = 0;
 
@@ -240,14 +244,12 @@ public class Simulation {
                 } else {
                     for (int i = 0; i < serverStatus.length; i++) {
                         if (serverStatus[i][0] == 0) {
-
-                            serverStatus[i][0] = clientNumber;
-
+                            serverStatus[i][0] = clientNumber;                           
+                            serverStatus[i][1] = timeModeling;
                             this.randomNumberTS = (int) (Math.random() * 99) + 1;
                             this.numberTS = this.assignmentTS(dataEntry, randomNumberTS);
-
-                            departureTime[i] = timeModeling + (long) numberTS;
-
+                            departureTime[i] = timeModeling + (long) numberTS;                       
+                            serverStatus[i][2] = departureTime[i]; 
                             break;
                         }
                     }
@@ -292,7 +294,8 @@ public class Simulation {
                 flagOut = true;
                 aux=timeModeling;
                 timeModeling = departureTime[posDT];
-
+                clientSystemW=(serverStatus[posDT][2]-serverStatus[posDT][1])+clientSystemW;
+                
                 if (!queueSim.isEmpty()) {
                     serverStatus[posDT][0] = queueSim.remove().getClientNumber();
                     
@@ -351,11 +354,12 @@ public class Simulation {
         //dataOut.setEventTable(eventModelTable);
 
         clientSystemL = clientSystemL / timeModeling;
-        clientSystemLq = clientSystemLq / timeModeling;
+        clientSystemLq = clientSystemLq / timeModeling;        
+        clientSystemW = clientSystemW / clientNumber;
         
         System.out.println("Cantidad promedio de clientes en el sistema: " + clientSystemL);
-        System.out.println("Cantidad promedio de clientes en cola : "+clientSystemLq);
-        System.out.println("Tiempo promedio de un cliente en cola y en el sistema: ");
+        System.out.println("Cantidad promedio de clientes en cola : "+ clientSystemLq);
+        System.out.println("Tiempo promedio de un cliente en el sistema: " + clientSystemW);
         System.out.println("Tiempo promedio adicional que se trabaja después de cerrar: ");
         System.out.println("Porcentaje de utilización de cada servidor y general: ");
         System.out.println("Costos: servidores y cliente: ");
