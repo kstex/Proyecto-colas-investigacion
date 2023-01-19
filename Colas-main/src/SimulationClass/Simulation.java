@@ -295,6 +295,7 @@ public class Simulation {
 
                 if (!queueSim.isEmpty()) {
                     serverStatus[posDT][0] = queueSim.remove().getClientNumber();
+                    
 
                     this.randomNumberTS = (int) (Math.random() * 99) + 1;
                     this.numberTS = this.assignmentTS(dataEntry, randomNumberTS);
@@ -315,7 +316,7 @@ public class Simulation {
                                 clientList.size(), arrivalTime, departureTime, 0, 0, randomNumberTS, numberTS
                         )
                 );*/
-                System.out.print("|| " + eventNumber + "         || Salida  || " + clientNumber + "           || " + timeModeling + "  ||");
+                System.out.print("|| " + eventNumber + "         || Salida  || " + clientOutNumber+ "           || " + timeModeling + "  ||");
                 for (int i = 0; i < serverStatus.length; i++) {
                     System.out.print(" " + serverStatus[i][0] + "  ||");
                 }
