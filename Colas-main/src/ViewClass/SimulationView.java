@@ -23,7 +23,7 @@ public class SimulationView extends javax.swing.JInternalFrame {
 //        simulation.simulationRun();
         
         dataOut = simulation.Simulation(data);
-        this.tableSimulation.setModel(dataOut.getEventTable());
+//        this.tableSimulation.setModel(dataOut.getEventTable());
     }
 
     @SuppressWarnings("unchecked")
