@@ -24,14 +24,6 @@ public class DataEntry  {
     private double costTimeWaitCustomer ; // cost of customer waiting
     
     private double busyServercost; // cost server busy  
-    
-    private double idleServerCost ; // cost any server idle
-    
-    private double extraTimeServerCost; //Cost of extra time in servers
-    
-    private double costNormalOperation; //cost normal operation in the system
-    
-    private double extraOperationCost; // cost extra operation in the system
 
     public DataEntry() {
         this.timeUnit = "Horas";
@@ -44,16 +36,11 @@ public class DataEntry  {
         this.costTimeCustomer = 0;
         this.costTimeWaitCustomer = 0;
         this.busyServercost = 0;
-        this.idleServerCost = 0;
-        this.extraTimeServerCost = 0;
-        this.costNormalOperation = 0;
-        this.extraOperationCost = 0;
     }
 
     public DataEntry(String timeUnit, boolean eventTable, double timeSimulation, int quantityCustomers, 
             int quantityServers, DefaultTableModel ArrivedCustomers, DefaultTableModel ServiceTime, 
-            double costTimeCustomer, double costTimeWaitCustomer, double busyServercost, double idleServerCost, 
-            double extraTimeServerCost, double costNormalOperation, double extraOperationCost) {
+            double costTimeCustomer, double costTimeWaitCustomer, double busyServercost) {
         this.timeUnit = timeUnit;
         this.eventTable = eventTable;
         this.timeSimulation = timeSimulation;
@@ -64,10 +51,6 @@ public class DataEntry  {
         this.costTimeCustomer = costTimeCustomer;
         this.costTimeWaitCustomer = costTimeWaitCustomer;
         this.busyServercost = busyServercost;
-        this.idleServerCost = idleServerCost;
-        this.extraTimeServerCost = extraTimeServerCost;
-        this.costNormalOperation = costNormalOperation;
-        this.extraOperationCost = extraOperationCost;
     }
 
     public String getTimeUnit() {
@@ -114,22 +97,6 @@ public class DataEntry  {
         return busyServercost;
     }
 
-    public double getIdleServerCost() {
-        return idleServerCost;
-    }
-
-    public double getExtraTimeServerCost() {
-        return extraTimeServerCost;
-    }
-
-    public double getCostNormalOperation() {
-        return costNormalOperation;
-    }
-
-    public double getExtraOperationCost() {
-        return extraOperationCost;
-    }
-    
     //Seters
 
     public void setTimeUnit(String timeUnit) {
@@ -176,29 +143,4 @@ public class DataEntry  {
         this.busyServercost = busyServercost;
     }
 
-    public void setIdleServerCost(double idleServerCost) {
-        this.idleServerCost = idleServerCost;
-    }
-
-    public void setExtraTimeServerCost(double extraTimeServerCost) {
-        this.extraTimeServerCost = extraTimeServerCost;
-    }
-
-    public void setCostNormalOperation(double costNormalOperation) {
-        this.costNormalOperation = costNormalOperation;
-    }
-
-    public void setExtraOperationCost(double extraOperationCost) {
-        this.extraOperationCost = extraOperationCost;
-    }
-    
-    
-    
-    
-    
-    
-
- 
-    
-    
 }

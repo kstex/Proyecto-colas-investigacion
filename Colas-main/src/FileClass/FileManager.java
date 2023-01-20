@@ -38,8 +38,7 @@ public class FileManager {
             }
             pw.println();
             pw.println(data.getTimeUnit() + " ;" + data.getEventTable() + " ;" + data.getTimeSimulation() + " ;" + data.getQuantityCustomers() + " ;"
-                    + data.getQuantityServers() + " ;" + data.getCostTimeCustomer() + " ;" + data.getCostTimeWaitCustomer() + " ;" + data.getBusyServercost() + " ;"
-                    + data.getIdleServerCost() + " ;" + data.getExtraTimeServerCost() + " ;" + data.getCostNormalOperation() + " ;" + data.getExtraOperationCost() + " ;");
+                    + data.getQuantityServers() + " ;" + data.getCostTimeCustomer() + " ;" + data.getCostTimeWaitCustomer() + " ;" + data.getBusyServercost() + " ;");
 
             //Here you can write the customers arrived table
             for (int i = 0; i < titlesArrivedTable.length; i++) {
@@ -94,10 +93,6 @@ public class FileManager {
                 data.setCostTimeCustomer(Double.parseDouble(st.nextToken().trim()));
                 data.setCostTimeWaitCustomer(Double.parseDouble(st.nextToken().trim()));
                 data.setBusyServercost(Double.parseDouble(st.nextToken().trim()));
-                data.setIdleServerCost(Double.parseDouble(st.nextToken().trim()));
-                data.setExtraTimeServerCost(Double.parseDouble(st.nextToken().trim()));
-                data.setCostNormalOperation(Double.parseDouble(st.nextToken().trim()));
-                data.setExtraOperationCost(Double.parseDouble(st.nextToken().trim()));
 
             }
             while (!(linea = bu.readLine()).contains("Tiempo de servicio")) {

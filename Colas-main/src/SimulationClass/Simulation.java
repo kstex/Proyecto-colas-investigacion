@@ -3,6 +3,7 @@ package SimulationClass;
 import DataClass.Client;
 import DataClass.DataEntry;
 import DataClass.DataOut;
+import ViewClass.ConfigView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -150,6 +151,10 @@ public class Simulation {
             this.departureTime[i] = 9999;
         }
 
+        
+        System.out.println();
+        
+        
         long dt = 9999;
         long aux=0;
         int posDT = 0;
@@ -358,13 +363,23 @@ public class Simulation {
         clientSystemW = clientSystemW / clientNumber;
         clientSystemWq = clientSystemWq / clientNumber;
         
-        System.out.println("Cantidad promedio de clientes en el sistema: " + clientSystemL);
-        System.out.println("Cantidad promedio de clientes en cola : "+ clientSystemLq);
+        double serverCost= dataEntry.getQuantityServers() * dataEntry.getBusyServercost() ; 
+        double waitClientCost= clientSystemLq * clientSystemWq * dataEntry.getCostTimeWaitCustomer();
+        double clientCost= clientSystemL * clientSystemW * dataEntry.getCostTimeCustomer();
+        double systemCost= serverCost + waitClientCost + clientCost;
+        
+                
+        System.out.println("Cantidad total de tiempo que dura la simulación: " + timeModeling);        
+        System.out.println("Cantidad total de clientes que arribaron al sistema durante el período: " + clientNumber);
+        System.out.println("Cantidad promedio de clientes en el sistema: " + Math.round(clientSystemL*100.0)/100.0);
+        System.out.println("Cantidad promedio de clientes en cola : "+ Math.round(clientSystemLq*100.0)/100.0);
         System.out.println("Tiempo promedio de un cliente en el sistema: " + clientSystemW);        
         System.out.println("Tiempo promedio de un cliente en cola: " + clientSystemWq);
-        System.out.println("Tiempo promedio adicional que se trabaja después de cerrar: ");
-        System.out.println("Porcentaje de utilización de cada servidor y general: ");
-        System.out.println("Costos: servidores y cliente: ");
+        System.out.println("Costo de servidor(es): "+ Math.round(serverCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());        
+        System.out.println("Costo del tiempo de espera del cliente: "+ Math.round(waitClientCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());               
+        System.out.println("Costo del tiempo en servicio del cliente: "+ Math.round(clientCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());
+        System.out.println("Costo total del sistema: "+ Math.round(systemCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());
+        
         return dataOut;
     }
 
