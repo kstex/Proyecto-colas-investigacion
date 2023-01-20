@@ -369,12 +369,12 @@ public class Simulation {
         double systemCost= serverCost + waitClientCost + clientCost;
         
                 
-        System.out.println("Cantidad total de tiempo que dura la simulación: " + timeModeling);        
-        System.out.println("Cantidad total de clientes que arribaron al sistema durante el período: " + clientNumber);
-        System.out.println("Cantidad promedio de clientes en el sistema: " + Math.round(clientSystemL*100.0)/100.0);
-        System.out.println("Cantidad promedio de clientes en cola : "+ Math.round(clientSystemLq*100.0)/100.0);
-        System.out.println("Tiempo promedio de un cliente en el sistema: " + clientSystemW);        
-        System.out.println("Tiempo promedio de un cliente en cola: " + clientSystemWq);
+        System.out.println("Cantidad total de tiempo que dura la simulacion: " + timeModeling+" "+dataEntry.getTimeUnit());        
+        System.out.println("Cantidad total de clientes que arribaron al sistema durante el período: " + clientNumber +" clientes/"+dataEntry.getTimeUnit());
+        System.out.println("Cantidad promedio de clientes en el sistema: " + Math.round(clientSystemL*100.0)/100.0+" clientes/"+dataEntry.getTimeUnit());
+        System.out.println("Cantidad promedio de clientes en cola : "+ Math.round(clientSystemLq*100.0)/100.0+" clientes/"+dataEntry.getTimeUnit());
+        System.out.println("Tiempo promedio de un cliente en el sistema: " + Math.round(clientSystemW*100.0)/100.0+" "+dataEntry.getTimeUnit());        
+        System.out.println("Tiempo promedio de un cliente en cola: " + Math.round(clientSystemWq*100.0)/100.0+" "+dataEntry.getTimeUnit());
         System.out.println("Costo de servidor(es): "+ Math.round(serverCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());        
         System.out.println("Costo del tiempo de espera del cliente: "+ Math.round(waitClientCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());               
         System.out.println("Costo del tiempo en servicio del cliente: "+ Math.round(clientCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());
