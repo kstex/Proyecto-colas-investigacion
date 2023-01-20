@@ -90,11 +90,10 @@ public class Simulation {
 
     private int serviceTime;   //tiempo de servicio segun servidor
 
-
-    private double clientSystemL;    
+    private double clientSystemL;
     private double clientSystemLq;
-    private double clientSystemW;    
-    private double clientSystemWq;    
+    private double clientSystemW;
+    private double clientSystemWq;
 
     private int extra;
 
@@ -129,7 +128,7 @@ public class Simulation {
         this.totalClient = 0;
 
         this.clientSystemL = 0;
-        this.clientSystemLq = 0;        
+        this.clientSystemLq = 0;
         this.clientSystemW = 0;
         this.clientSystemWq = 0;
 
@@ -151,41 +150,41 @@ public class Simulation {
             this.departureTime[i] = 9999;
         }
 
-        
         System.out.println();
-        
-        
+
         long dt = 9999;
-        long aux=0;
+        long aux = 0;
         int posDT = 0;
         long oldTimeModeling = 0;
         boolean flagBusy;
         boolean flagOut = false;
 
-        System.out.print("|| Evento N° || Tipo de Evento || N° Cliente || TM ||");
-        for (int i = 0; i < serverStatus.length; i++) {
-            System.out.print(" SS" + i + " ||");
+        if (dataEntry.getEventTable().equals("si")) {
+
+            System.out.print("|| Evento N° || Tipo de Evento || N° Cliente || TM ||");
+            for (int i = 0; i < serverStatus.length; i++) {
+                System.out.print(" SS" + i + " ||");
+            }
+            System.out.print(" WL || Cant Clientes || AT ||");
+
+            for (int i = 0; i < serverStatus.length; i++) {
+                System.out.print(" DT" + i + " ||");
+            }
+
+            System.out.println(" N° R. TELL || TELL || N° R. TS || TS ||");
+
+            System.out.print("|| " + eventNumber + "         || Cond. Inic. || " + clientNumber + "           || " + timeModeling + "  ||");
+            for (int i = 0; i < serverStatus.length; i++) {
+                System.out.print(" " + serverStatus[i][0] + "  ||");
+            }
+            System.out.print(" " + totalClient + "  || " + queueSim.size() + "           || " + arrivalTime + "  ||");
+
+            for (int i = 0; i < serverStatus.length; i++) {
+                System.out.print(" " + departureTime[i] + "  ||");
+            }
+
+            System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
         }
-        System.out.print(" WL || Cant Clientes || AT ||");
-
-        for (int i = 0; i < serverStatus.length; i++) {
-            System.out.print(" DT" + i + " ||");
-        }
-
-        System.out.println(" N° R. TELL || TELL || N° R. TS || TS ||");
-
-        System.out.print("|| " + eventNumber + "         || Cond. Inic. || " + clientNumber + "           || " + timeModeling + "  ||");
-        for (int i = 0; i < serverStatus.length; i++) {
-            System.out.print(" " + serverStatus[i][0] + "  ||");
-        }
-        System.out.print(" " + totalClient + "  || " + queueSim.size() + "           || " + arrivalTime + "  ||");
-
-        for (int i = 0; i < serverStatus.length; i++) {
-            System.out.print(" " + departureTime[i] + "  ||");
-        }
-
-        System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
-
         /*DefaultTableModel eventModelTable = new DefaultTableModel(null, this.getTitles());
         eventModelTable.addRow(
                 this.addRow(
@@ -222,45 +221,43 @@ public class Simulation {
                     break;
                 }
             }
-            
-            long clientsL=totalClient;
-            long clientsLq=queueSim.size();
-            
+
+            long clientsL = totalClient;
+            long clientsLq = queueSim.size();
+
             //Llegada
             if (arrivalTime < dt) {
 
                 clientNumber++;
                 totalClient++;
-                
-                aux=timeModeling;
+
+                aux = timeModeling;
                 //oldTimeModeling = timeModeling;
                 timeModeling = arrivalTime;
-                
+
                 this.randomNumberTELL = (int) (Math.random() * 99) + 1;
                 this.numberTELL = this.assignmentAT(dataEntry, randomNumberTELL);
 
                 arrivalTime = arrivalTime + numberTELL;
 
                 if (!queueSim.isEmpty() || flagBusy) {
-                    this.queueSim.add(new Client(clientNumber,timeModeling));
+                    this.queueSim.add(new Client(clientNumber, timeModeling));
 
                     randomNumberTS = 0;
                     numberTS = 0;
                 } else {
                     for (int i = 0; i < serverStatus.length; i++) {
                         if (serverStatus[i][0] == 0) {
-                            serverStatus[i][0] = clientNumber;                           
+                            serverStatus[i][0] = clientNumber;
                             serverStatus[i][1] = timeModeling;
                             this.randomNumberTS = (int) (Math.random() * 99) + 1;
                             this.numberTS = this.assignmentTS(dataEntry, randomNumberTS);
-                            departureTime[i] = timeModeling + (long) numberTS;                       
-                            serverStatus[i][2] = departureTime[i]; 
+                            departureTime[i] = timeModeling + (long) numberTS;
+                            serverStatus[i][2] = departureTime[i];
                             break;
                         }
                     }
                 }
-
-                
 
                 /* calculo de Ti en L
                 if (totalClient > 0) {
@@ -279,33 +276,33 @@ public class Simulation {
                                 clientList.size(), arrivalTime, departureTime, randomNumberTELL, numberTELL, randomNumberTS, numberTS
                         )
                 );*/
- 
- 
-                System.out.print("|| " + eventNumber + "         || Llegada || " + clientNumber + "           || " + timeModeling + "  ||");
-                for (int i = 0; i < serverStatus.length; i++) {
-                    System.out.print(" " + serverStatus[i][0] + "  ||");
+                if (dataEntry.getEventTable().equals("si")) {
+
+                    System.out.print("|| " + eventNumber + "         || Llegada || " + clientNumber + "           || " + timeModeling + "  ||");
+                    for (int i = 0; i < serverStatus.length; i++) {
+                        System.out.print(" " + serverStatus[i][0] + "  ||");
+                    }
+                    System.out.print(" " + totalClient + "  || " + queueSim.size() + "           || " + arrivalTime + "  ||");
+
+                    for (int i = 0; i < serverStatus.length; i++) {
+                        System.out.print(" " + departureTime[i] + "  ||");
+                    }
+
+                    System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
                 }
-                System.out.print(" " + totalClient + "  || " + queueSim.size() + "           || " + arrivalTime + "  ||");
-
-                for (int i = 0; i < serverStatus.length; i++) {
-                    System.out.print(" " + departureTime[i] + "  ||");
-                }
-
-                System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
-
             } else {  //Salida
 
                 totalClient--;
                 flagOut = true;
-                aux=timeModeling;
+                aux = timeModeling;
                 timeModeling = departureTime[posDT];
-                clientSystemW=(serverStatus[posDT][2]-serverStatus[posDT][1])+clientSystemW;
-                
-                if (!queueSim.isEmpty()) {  
-                    
-                    clientSystemWq=(timeModeling-queueSim.peek().getArriveTime())+clientSystemWq;       
-                    serverStatus[posDT][0] = queueSim.peek().getClientNumber();    
-                    queueSim.remove().getClientNumber(); 
+                clientSystemW = (serverStatus[posDT][2] - serverStatus[posDT][1]) + clientSystemW;
+
+                if (!queueSim.isEmpty()) {
+                    clientOutNumber = serverStatus[posDT][0];
+                    clientSystemWq = (timeModeling - queueSim.peek().getArriveTime()) + clientSystemWq;
+                    serverStatus[posDT][0] = queueSim.peek().getClientNumber();
+                    queueSim.remove().getClientNumber();
                     this.randomNumberTS = (int) (Math.random() * 99) + 1;
                     this.numberTS = this.assignmentTS(dataEntry, randomNumberTS);
                     departureTime[posDT] = timeModeling + (long) numberTS;
@@ -324,25 +321,28 @@ public class Simulation {
                                 clientList.size(), arrivalTime, departureTime, 0, 0, randomNumberTS, numberTS
                         )
                 );*/
-                System.out.print("|| " + eventNumber + "         || Salida  || " + clientOutNumber+ "           || " + timeModeling + "  ||");
-                for (int i = 0; i < serverStatus.length; i++) {
-                    System.out.print(" " + serverStatus[i][0] + "  ||");
-                }
-                System.out.print(" " + totalClient + "  || " + queueSim.size() + "           || " + arrivalTime + "  ||");
+                if (dataEntry.getEventTable().equals("si")) {
 
-                for (int i = 0; i < serverStatus.length; i++) {
-                    System.out.print(" " + departureTime[i] + "  ||");
-                }
+                    System.out.print("|| " + eventNumber + "         || Salida  || " + clientOutNumber + "           || " + timeModeling + "  ||");
+                    for (int i = 0; i < serverStatus.length; i++) {
+                        System.out.print(" " + serverStatus[i][0] + "  ||");
+                    }
+                    System.out.print(" " + totalClient + "  || " + queueSim.size() + "           || " + arrivalTime + "  ||");
 
-                System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
+                    for (int i = 0; i < serverStatus.length; i++) {
+                        System.out.print(" " + departureTime[i] + "  ||");
+                    }
+
+                    System.out.println(" " + randomNumberTELL + "          || " + numberTELL + "    || " + randomNumberTS + "        || " + numberTS + "  ||");
+                }
             }
 
-        //Cantidad promedio de clientes en el sistema
-        clientSystemL= ((timeModeling-aux)*clientsL) + (clientSystemL);
-               
-        //Cantidad promedio de clientes en cola
-        clientSystemLq = ((timeModeling-aux)*clientsLq) + (clientSystemLq);
-                
+            //Cantidad promedio de clientes en el sistema
+            clientSystemL = ((timeModeling - aux) * clientsL) + (clientSystemL);
+
+            //Cantidad promedio de clientes en cola
+            clientSystemLq = ((timeModeling - aux) * clientsLq) + (clientSystemLq);
+
         } while (timeModeling <= dataEntry.getTimeSimulation());
 
         /*
@@ -357,29 +357,27 @@ public class Simulation {
         clientSystemTime = additionL / timeModeling;
          */
         //dataOut.setEventTable(eventModelTable);
-
         clientSystemL = clientSystemL / timeModeling;
-        clientSystemLq = clientSystemLq / timeModeling;        
+        clientSystemLq = clientSystemLq / timeModeling;
         clientSystemW = clientSystemW / clientNumber;
         clientSystemWq = clientSystemWq / clientNumber;
-        
-        double serverCost= dataEntry.getQuantityServers() * dataEntry.getBusyServercost() ; 
-        double waitClientCost= clientSystemLq * clientSystemWq * dataEntry.getCostTimeWaitCustomer();
-        double clientCost= clientSystemL * clientSystemW * dataEntry.getCostTimeCustomer();
-        double systemCost= serverCost + waitClientCost + clientCost;
-        
-                
-        System.out.println("Cantidad total de tiempo que dura la simulacion: " + timeModeling+" "+dataEntry.getTimeUnit());        
-        System.out.println("Cantidad total de clientes que arribaron al sistema durante el período: " + clientNumber +" clientes/"+dataEntry.getTimeUnit());
-        System.out.println("Cantidad promedio de clientes en el sistema: " + Math.round(clientSystemL*100.0)/100.0+" clientes/"+dataEntry.getTimeUnit());
-        System.out.println("Cantidad promedio de clientes en cola : "+ Math.round(clientSystemLq*100.0)/100.0+" clientes/"+dataEntry.getTimeUnit());
-        System.out.println("Tiempo promedio de un cliente en el sistema: " + Math.round(clientSystemW*100.0)/100.0+" "+dataEntry.getTimeUnit());        
-        System.out.println("Tiempo promedio de un cliente en cola: " + Math.round(clientSystemWq*100.0)/100.0+" "+dataEntry.getTimeUnit());
-        System.out.println("Costo de servidor(es): "+ Math.round(serverCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());        
-        System.out.println("Costo del tiempo de espera del cliente: "+ Math.round(waitClientCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());               
-        System.out.println("Costo del tiempo en servicio del cliente: "+ Math.round(clientCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());
-        System.out.println("Costo total del sistema: "+ Math.round(systemCost*100.0)/100.0+ "$/"+dataEntry.getTimeUnit());
-        
+
+        double serverCost = dataEntry.getQuantityServers() * dataEntry.getBusyServercost();
+        double waitClientCost = clientSystemLq * clientSystemWq * dataEntry.getCostTimeWaitCustomer();
+        double clientCost = clientSystemL * clientSystemW * dataEntry.getCostTimeCustomer();
+        double systemCost = serverCost + waitClientCost + clientCost;
+
+        System.out.println("Cantidad total de tiempo que dura la simulacion: " + timeModeling + " " + dataEntry.getTimeUnit());
+        System.out.println("Cantidad total de clientes que arribaron al sistema durante el período: " + clientNumber + " clientes/" + dataEntry.getTimeUnit());
+        System.out.println("Cantidad promedio de clientes en el sistema: " + Math.round(clientSystemL * 100.0) / 100.0 + " clientes/" + dataEntry.getTimeUnit());
+        System.out.println("Cantidad promedio de clientes en cola : " + Math.round(clientSystemLq * 100.0) / 100.0 + " clientes/" + dataEntry.getTimeUnit());
+        System.out.println("Tiempo promedio de un cliente en el sistema: " + Math.round(clientSystemW * 100.0) / 100.0 + " " + dataEntry.getTimeUnit());
+        System.out.println("Tiempo promedio de un cliente en cola: " + Math.round(clientSystemWq * 100.0) / 100.0 + " " + dataEntry.getTimeUnit());
+        System.out.println("Costo de servidor(es): " + Math.round(serverCost * 100.0) / 100.0 + "$/" + dataEntry.getTimeUnit());
+        System.out.println("Costo del tiempo de espera del cliente: " + Math.round(waitClientCost * 100.0) / 100.0 + "$/" + dataEntry.getTimeUnit());
+        System.out.println("Costo del tiempo en servicio del cliente: " + Math.round(clientCost * 100.0) / 100.0 + "$/" + dataEntry.getTimeUnit());
+        System.out.println("Costo total del sistema: " + Math.round(systemCost * 100.0) / 100.0 + "$/" + dataEntry.getTimeUnit());
+
         return dataOut;
     }
 
